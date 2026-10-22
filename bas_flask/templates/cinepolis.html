@@ -1,0 +1,124 @@
+
+{% extends "layout.html" %}
+
+{% block container %}
+
+<div class="container mt-4">
+
+    <div class="card mx-auto" style="max-width: 500px;">
+
+        <div class="card-body">
+
+            <h2 class="text-center mb-4">Cinépolis</h2>
+
+            <h5>Entradas</h5>
+            <hr>
+
+            <form action="/cinepolis" method="post">
+
+                <!-- Nombre -->
+                <div class="mb-3">
+                    <label class="form-label">Nombre:</label>
+                    <input
+                        type="text"
+                        name="nombre"
+                        class="form-control"
+                        value="{{ nombre }}"
+                        required>
+                </div>
+
+                <!-- Compradores -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Cantidad de compradores:
+                    </label>
+
+                    <input
+                        type="number"
+                        name="compradores"
+                        min="1"
+                        class="form-control"
+                        value="{{ compradores if compradores > 0 else '' }}"
+                        required>
+                </div>
+
+                <!-- Tarjeta -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        ¿Tiene tarjeta Cineco?
+                    </label>
+
+                    <div>
+                        <input
+                            type="radio"
+                            name="tarjeta"
+                            value="si"
+                            {% if tarjeta == "si" %}checked{% endif %}>
+                        Sí
+
+                        <input
+                            type="radio"
+                            name="tarjeta"
+                            value="no"
+                            {% if tarjeta == "no" %}checked{% endif %}>
+                        No
+                    </div>
+
+                </div>
+
+                <!-- Boletos -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Cantidad de boletos:
+                    </label>
+
+                    <input
+                        type="number"
+                        name="boletos"
+                        min="1"
+                        class="form-control"
+                        value="{{ boletos if boletos > 0 else '' }}"
+                        required>
+                </div>
+
+                <!-- Botón -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        Procesar
+                    </button>
+                </div>
+
+            </form>
+
+            <hr>
+
+            <!-- Salidas -->
+            <h5>Salidas</h5>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Valor a pagar:
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="${{ '%.2f'|format(total) }}"
+                    readonly>
+            </div>
+
+            <!-- Mensaje -->
+            {% if mensaje %}
+                <p class="text-center mt-3">
+                    {{ mensaje }}
+                </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
