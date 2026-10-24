@@ -97,8 +97,35 @@ def actualizar_cursor(mat):
 
     except Exception as ex:
         return jsonify({'mensaje':"Alumno no encontrado", 'exito':False})
-    
 
+
+@app.route("/alumnos/<int:mat>", methods=['DELETE'])
+def eliminar_alumno(mat):
+    try:
+        alumno = leer_alumno_bd(mat)
+
+        if alumno is not None:
+            cursor = con.connection.cursor()
+            sql = "DELETE FROM alumnos WHERE matricula = %s"
+            cursor.execute(sql, (mat,))
+            con.connection.commit()
+            cursor.close()
+
+            return jsonify({
+                'mensaje': "Alumno eliminado.",
+                'exito': True
+            })
+        else:
+            return jsonify({
+                'mensaje': "Alumno no encontrado.",
+                'exito': False
+            }), 404
+
+    except Exception as ex:
+        return jsonify({'mensaje': "Error {0}".format(ex),'exito': False}), 500
+
+
+    
 if __name__=="__main__":
     app.config.from_object(config['development'])
     app.register_error_handler(404, pagina_no_encontrada)
