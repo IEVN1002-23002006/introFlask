@@ -4,6 +4,8 @@ class DevelopmentConfig():
     MYSQL_USER='root'
     MYSQL_PASSWORD=''
     MYSQL_DB='api_utl'
+    MYSQL_CURSORCLAS = 'Cursor'
+    
    
 config={
     'development': DevelopmentConfig
